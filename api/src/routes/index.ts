@@ -1,7 +1,8 @@
 import { Router } from "express";
+import videogamesRouter from "./videogames";
 
 const router = Router();
 
-router.get("/", (req, res) => res.json("Hello World"));
+router.use("/videogames", videogamesRouter);
 
 export default router;
