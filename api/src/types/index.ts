@@ -13,6 +13,13 @@ export interface IGenre {
   [key: string]: any;
 }
 
+export interface IGenres {
+  count: number;
+  next: string;
+  previous: string;
+  results: IGenre[];
+}
+
 export interface IVideogame {
   id: number;
   name: string;
