@@ -18,7 +18,7 @@ export const Videogame = (sequelize: Sequelize) =>
         type: DataTypes.STRING,
         allowNull: false,
       },
-      released: {
+      release: {
         type: DataTypes.DATEONLY,
       },
       rating: {
