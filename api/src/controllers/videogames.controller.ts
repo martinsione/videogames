@@ -15,7 +15,7 @@ const getFromApi = async (name: any) => {
     id: game.id,
     name: game.name,
     image: game.background_image,
-    genre: game.genres.map((genre: IGenre) => genre.name),
+    genres: game.genres.map((genre: IGenre) => genre.name),
   }));
 };
 

@@ -28,7 +28,7 @@ export interface IVideogame {
   rating?: number;
   background_image: string;
   platforms: IPlatform[];
-  genre: IGenre[];
+  genres: IGenre[];
   createdInDb?: boolean;
   [key: string]: any;
 }
