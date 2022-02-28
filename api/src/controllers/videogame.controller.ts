@@ -103,3 +103,15 @@ export const addVideogame = async (req: Request, res: Response) => {
   const videogameWithGenres = await getVideogameByIdFromDb(videogame.id);
   res.json({ videogame: videogameWithGenres, created: created });
 };
+
+export const deleteVideogame = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  if (!id) return res.status(400).json({ message: "Missing id" });
+
+  try {
+    await videogameModel.destroy({ where: { id } });
+    res.json({ message: `Item ${id} successfully deleted` });
+  } catch (e) {
+    return res.status(500).json(e);
+  }
+};
