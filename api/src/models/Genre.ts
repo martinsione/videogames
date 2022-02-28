@@ -2,7 +2,7 @@ import { DataTypes, Sequelize } from "sequelize";
 
 export const Genre = (sequelize: Sequelize) =>
   sequelize.define(
-    "Genre",
+    "genre",
     {
       id: {
         type: DataTypes.INTEGER,

@@ -2,7 +2,7 @@ import { DataTypes, Sequelize } from "sequelize";
 
 export const Videogame = (sequelize: Sequelize) =>
   sequelize.define(
-    "Videogame",
+    "videogame",
     {
       id: {
         type: DataTypes.UUID,
