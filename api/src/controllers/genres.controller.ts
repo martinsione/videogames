@@ -1,6 +1,6 @@
 import axios from "axios";
 import type { Request, Response } from "express";
-import { Genre } from "../models";
+import { genreModel } from "../db";
 import type { IGenre, IGenres } from "../types";
 
 const API = "https://api.rawg.io/api/genres";
@@ -14,7 +14,7 @@ const getGenresFromApi = async (): Promise<IGenres> => {
 };
 
 const getGenresFromDb = async () => {
-  const data = await Genre.findAll({ attributes: ["id", "name"] });
+  const data = await genreModel.findAll({ attributes: ["id", "name"] });
   return data;
 };
 
@@ -30,7 +30,7 @@ export const getGenres = async (req: Request, res: Response) => {
       id: genre.id,
       name: genre.name,
     }));
-    const genres = await Genre.bulkCreate(mappedGenres);
+    const genres = await genreModel.bulkCreate(mappedGenres);
     res.json(genres);
   } catch (e) {
     res.status(500).json(e);

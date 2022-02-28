@@ -1,7 +1,7 @@
 import axios from "axios";
 import type { Request, Response } from "express";
 import { Op } from "sequelize";
-import { Videogame } from "../models";
+import { videogameModel } from "../db";
 import type { IGenre, IVideogame, IVideogames } from "../types";
 
 const API = "https://api.rawg.io/api/games";
@@ -24,7 +24,7 @@ const getFromDb = async (name: any) => {
   if (name) {
     whereStatement.name = { [Op.iLike]: `%${name}%` };
   }
-  const data = await Videogame.findAll({
+  const data = await videogameModel.findAll({
     attributes: ["id", "name", "image"],
     where: whereStatement,
   });

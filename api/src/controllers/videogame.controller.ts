@@ -1,6 +1,6 @@
 import axios from "axios";
 import type { Request, Response } from "express";
-import { Genre, Videogame } from "../models";
+import { videogameModel } from "../db";
 import type { IGenre, IPlatform, IVideogame } from "../types";
 
 const API = "https://api.rawg.io/api/games";
@@ -39,7 +39,7 @@ export const getVideogameById = async (req: Request, res: Response) => {
 };
 
 export const addVideogame = async (req: Request, res: Response) => {
-  const { name, description, platforms, genre, released, rating, image } =
+  const { name, description, platforms, genres, released, rating, image } =
     req.body;
 
   const missing: string[] = [];
@@ -47,7 +47,7 @@ export const addVideogame = async (req: Request, res: Response) => {
   if (!name) missing.push("name");
   if (!description) missing.push("description");
   if (!platforms) missing.push("platforms");
-  if (!genre) missing.push("genre");
+  if (!genres) missing.push("genres");
 
   if (missing.length) {
     return res.status(400).json({ message: `Missing: ${missing.join(", ")}` });
@@ -65,9 +65,10 @@ export const addVideogame = async (req: Request, res: Response) => {
     game.rating = rating;
   }
 
-  const [videogame, created] = await Videogame.findOrCreate({
+  const [videogame, created] = await videogameModel.findOrCreate({
     where: { ...game },
   });
+  const genre = await videogame.setGenres(genres);
 
   if (!created) {
     return res.status(400).json({ message: "Videogame already exists" });
