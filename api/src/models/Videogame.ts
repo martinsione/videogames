@@ -15,14 +15,14 @@ export const Videogame = (sequelize: Sequelize) =>
         allowNull: false,
       },
       description: {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
         allowNull: false,
       },
       release: {
         type: DataTypes.DATEONLY,
       },
       rating: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.FLOAT,
       },
       platforms: {
         type: DataTypes.ARRAY(DataTypes.STRING),
