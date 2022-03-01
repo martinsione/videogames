@@ -9,3 +9,5 @@ export const store = createStore(
   rootReducer,
   composeEnhancers(applyMiddleware(thunk))
 );
+
+export type AppState = ReturnType<typeof rootReducer>;

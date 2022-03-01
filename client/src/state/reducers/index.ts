@@ -1,6 +1,13 @@
+import { IGame, IGameDetail, IGenre } from "../../types";
 import { ActionType } from "../action-types";
 
-const initialState = {
+interface IState {
+  gameDetail: IGameDetail | undefined;
+  games: IGame[];
+  genres: IGenre[];
+}
+
+const initialState: IState = {
   gameDetail: undefined,
   games: [],
   genres: [],
@@ -13,7 +20,9 @@ export default function rootReducer(state = initialState, action: any) {
     case ActionType.DELETE_GAME:
       return {
         ...state,
-        games: state.games.filter((game) => game.id !== action.payload.id),
+        games: state.games.filter(
+          (game: IGame) => game.id !== action.payload.id
+        ),
       };
     case ActionType.GET_GAMES:
       return { ...state, games: action.payload };
