@@ -8,7 +8,7 @@ export const GameCard = ({ game }: { game: IGame }) => {
       <div className={styles.body}>
         <p className={styles.title}>{game.name}</p>
         <div className={styles.genresContainer}>
-          {game.genres.map((genre: string) => (
+          {game.genres.map((genre) => (
             <span key={genre}>{genre}</span>
           ))}
         </div>

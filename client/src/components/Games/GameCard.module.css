@@ -18,6 +18,11 @@
   object-fit: cover;
   width: 25rem;
   height: 20rem;
+
+  /* Make image not selectable */
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 .body {

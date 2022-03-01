@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppState, getGames } from "../../state";
 import { IGame } from "../../types";
+import { Loader } from "../Loader";
 import { GameCard } from "./GameCard";
 import styles from "./Games.module.css";
 
@@ -18,7 +19,7 @@ export const Games: React.FC = () => {
       {games.length ? (
         games.map((game: IGame) => <GameCard key={game.id} game={game} />)
       ) : (
-        <p>hola</p>
+        <Loader />
       )}
     </div>
   );
