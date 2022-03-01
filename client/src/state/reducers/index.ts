@@ -27,7 +27,7 @@ export default function rootReducer(state = initialState, action: any) {
     case ActionType.GET_GAMES:
       return { ...state, games: action.payload };
     case ActionType.GET_GAME_BY_ID:
-      return { ...state, activeGame: action.payload };
+      return { ...state, gameDetail: action.payload };
     case ActionType.GET_GAME_BY_NAME:
       return { ...state, games: action.payload };
     case ActionType.GET_GENRES:
