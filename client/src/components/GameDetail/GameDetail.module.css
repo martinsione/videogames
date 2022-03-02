@@ -7,6 +7,7 @@
 
 .container {
   display: flex;
+  max-height: 90vh;
   max-width: 1376px;
   background-color: var(--bg-darkgray);
   box-shadow: 0 0 11px rgba(240, 240, 240, 0.4);
@@ -17,6 +18,7 @@
 /* Make each item take up half of the space */
 .container div {
   flex: 1;
+  overflow-y: auto;
 }
 
 .body {
