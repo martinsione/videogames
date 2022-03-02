@@ -33,3 +33,11 @@ export const getGenres = () => async (dispatch: any) => {
   const { data } = await axios.get(`/genres`);
   return dispatch({ type: ActionType.GET_GENRES, payload: data });
 };
+
+export const orderByName = (order?: string) => async (dispatch: any) => {
+  return dispatch({ type: ActionType.ORDER_BY_NAME, payload: order });
+};
+
+export const orderByRating = (order?: string) => async (dispatch: any) => {
+  return dispatch({ type: ActionType.ORDER_BY_RATING, payload: order });
+};

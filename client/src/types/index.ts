@@ -3,12 +3,12 @@ export interface IGame {
   name: string;
   image: string;
   genres: string[];
+  rating: number;
 }
 
 export interface IGameDetail extends IGame {
   description: string;
   release?: string;
-  rating?: number;
   platforms: string[];
   createdInDb?: boolean;
 }

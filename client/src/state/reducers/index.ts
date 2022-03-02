@@ -32,6 +32,39 @@ export default function rootReducer(state = initialState, action: any) {
       return { ...state, games: action.payload };
     case ActionType.GET_GENRES:
       return { ...state, genres: action.payload };
+    case ActionType.ORDER_BY_NAME:
+      if (action.payload === "asc") {
+        return {
+          ...state,
+          games: [...state.games].sort((a: IGame, b: IGame) =>
+            a.name.localeCompare(b.name)
+          ),
+        };
+      } else {
+        return {
+          ...state,
+          games: [...state.games].sort((a: IGame, b: IGame) =>
+            b.name.localeCompare(a.name)
+          ),
+        };
+      }
+    case ActionType.ORDER_BY_RATING:
+      if (action.payload === "asc") {
+        return {
+          ...state,
+          games: [...state.games].sort(
+            (a: IGame, b: IGame) => b.rating - a.rating
+          ),
+        };
+      } else {
+        return {
+          ...state,
+          games: [...state.games].sort(
+            (a: IGame, b: IGame) => a.rating - b.rating
+          ),
+        };
+      }
+
     default:
       return state;
   }
