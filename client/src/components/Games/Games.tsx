@@ -1,12 +1,14 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppState, getGames } from "../../state";
 import { IGame } from "../../types";
 import { GameCard } from "../GameCard";
 import { Loader } from "../Loader";
+import { SearchBar } from "../SearchBar";
 import styles from "./Games.module.css";
 
 export const Games: React.FC = () => {
+  const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
   const games = useSelector((store: AppState) => store.games);
 
@@ -14,13 +16,22 @@ export const Games: React.FC = () => {
     dispatch(getGames());
   }, [dispatch]);
 
+  useEffect(() => {
+    if (games.length) {
+      setLoading(false);
+    }
+  }, [games]);
+
   return (
-    <div className={styles.container}>
-      {games.length ? (
-        games.map((game: IGame) => <GameCard key={game.id} game={game} />)
-      ) : (
-        <Loader />
-      )}
-    </div>
+    <>
+      <SearchBar setLoading={setLoading} />
+      <div className={styles.container}>
+        {loading ? (
+          <Loader />
+        ) : (
+          games.map((game: IGame) => <GameCard key={game.id} game={game} />)
+        )}
+      </div>
+    </>
   );
 };
