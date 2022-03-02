@@ -1,0 +1,102 @@
+.center {
+  width: 100vw;
+  height: 100vh;
+  display: grid;
+  place-content: center;
+  place-items: center;
+}
+
+.container {
+  display: flex;
+  max-width: 1376px;
+  background-color: var(--bg-darkgray);
+  box-shadow: 0 0 11px rgba(240, 240, 240, 0.4);
+  overflow: hidden;
+  border-radius: 2rem;
+}
+
+/* Make each item take up half of the space */
+.container div {
+  flex: 1;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin: auto;
+  padding: 2rem 4rem;
+}
+
+.title {
+  font-size: 2.3rem;
+  font-weight: 600;
+}
+
+.subheader {
+  display: flex;
+  gap: 1rem;
+}
+.release,
+.rating {
+  padding: 0.4rem 0.6rem;
+  border-radius: 9999px;
+  display: flex;
+  width: fit-content;
+}
+
+.release {
+  background-color: #85581d;
+}
+
+.rating {
+  background-color: #2b593e;
+}
+
+.description {
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
+
+.genresContainer,
+.platformsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.3rem;
+  font-size: 0.8rem;
+}
+
+.genresContainer > span {
+  background-color: #28456c;
+  padding: 0.4rem 1rem;
+  border-radius: 1rem;
+}
+
+.platformsContainer > span {
+  background-color: #492f64;
+  padding: 0.4rem 1rem;
+  border-radius: 1rem;
+}
+
+.imageContainer {
+  position: relative;
+}
+
+.imageContainer::after {
+  content: "";
+  display: block;
+  padding-bottom: 100%;
+}
+
+.image {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+
+  /* make content not selectable */
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+}

@@ -12,8 +12,9 @@
 body {
   background-color: var(--bg-color);
   color: var(--text-color-primary);
+  min-height: 100vh;
   max-width: 1376px;
-  margin: 0 auto !important;
+  margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
