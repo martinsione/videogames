@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import { AppState, getGames } from "../../state";
 import { IGame } from "../../types";
 import { GameCard } from "../GameCard";
@@ -29,7 +30,11 @@ export const Games: React.FC = () => {
         {loading ? (
           <Loader />
         ) : (
-          games.map((game: IGame) => <GameCard key={game.id} game={game} />)
+          games.map((game: IGame) => (
+            <Link key={game.id} to={`/games/${game.id}`}>
+              <GameCard game={game} />
+            </Link>
+          ))
         )}
       </div>
     </>
