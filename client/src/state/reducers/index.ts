@@ -4,12 +4,14 @@ import { ActionType } from "../action-types";
 interface IState {
   gameDetail: IGameDetail | undefined;
   games: IGame[];
+  gamesBackup: IGame[];
   genres: IGenre[];
 }
 
 const initialState: IState = {
   gameDetail: undefined,
   games: [],
+  gamesBackup: [],
   genres: [],
 };
 
@@ -25,11 +27,11 @@ export default function rootReducer(state = initialState, action: any) {
         ),
       };
     case ActionType.GET_GAMES:
-      return { ...state, games: action.payload };
+      return { ...state, gamesBackup: action.payload, games: action.payload };
     case ActionType.GET_GAME_BY_ID:
       return { ...state, gameDetail: action.payload };
     case ActionType.GET_GAME_BY_NAME:
-      return { ...state, games: action.payload };
+      return { ...state, gamesBackup: action.payload, games: action.payload };
     case ActionType.GET_GENRES:
       return { ...state, genres: action.payload };
     case ActionType.ORDER_BY_NAME:
@@ -64,6 +66,35 @@ export default function rootReducer(state = initialState, action: any) {
           ),
         };
       }
+
+    case ActionType.FILTER_BY_GENRE:
+      return {
+        ...state,
+        games: [...state.gamesBackup].filter((game: IGame) =>
+          game.genres.includes(action.payload)
+        ),
+      };
+
+    case ActionType.FILTER_BY_ORIGIN: {
+      console.log("vine a filtrar por origin");
+      if (action.payload === "database") {
+        return {
+          ...state,
+          games: [...state.gamesBackup].filter((game: IGame) =>
+            game.hasOwnProperty("createdInDb")
+          ),
+        };
+      } else if (action.payload === "api") {
+        return {
+          ...state,
+          games: [...state.gamesBackup].filter(
+            (game: IGame) => !game.hasOwnProperty("createdInDb")
+          ),
+        };
+      } else {
+        return { ...state };
+      }
+    }
 
     default:
       return state;

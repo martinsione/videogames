@@ -34,10 +34,21 @@ export const getGenres = () => async (dispatch: any) => {
   return dispatch({ type: ActionType.GET_GENRES, payload: data });
 };
 
-export const orderByName = (order?: string) => async (dispatch: any) => {
-  return dispatch({ type: ActionType.ORDER_BY_NAME, payload: order });
+export const filterByGenre = (genre: string) => async (dispatch: any) => {
+  return dispatch({ type: ActionType.FILTER_BY_GENRE, payload: genre });
 };
 
-export const orderByRating = (order?: string) => async (dispatch: any) => {
-  return dispatch({ type: ActionType.ORDER_BY_RATING, payload: order });
-};
+export const filterByOrigin =
+  (origin?: "api" | "database") => async (dispatch: any) => {
+    return dispatch({ type: ActionType.FILTER_BY_ORIGIN, payload: origin });
+  };
+
+export const orderByName =
+  (order?: "asc" | "desc") => async (dispatch: any) => {
+    return dispatch({ type: ActionType.ORDER_BY_NAME, payload: order });
+  };
+
+export const orderByRating =
+  (order?: "asc" | "desc") => async (dispatch: any) => {
+    return dispatch({ type: ActionType.ORDER_BY_RATING, payload: order });
+  };
