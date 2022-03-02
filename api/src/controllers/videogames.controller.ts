@@ -17,6 +17,7 @@ const getFromApi = async (name: any) => {
           id: game.id,
           name: game.name,
           image: game.background_image,
+          rating: game.rating,
           genres: game.genres.map((genre: IGenre) => genre.name),
         }));
       });
@@ -31,6 +32,7 @@ const getFromApi = async (name: any) => {
         id: game.id,
         name: game.name,
         image: game.background_image,
+        rating: game.rating,
         genres: game.genres.map((genre: IGenre) => genre.name),
       }));
     });
