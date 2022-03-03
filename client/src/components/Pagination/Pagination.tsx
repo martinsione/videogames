@@ -15,7 +15,7 @@ export const Pagination = ({
     Array(Math.ceil(totalItems / itemsPerPage)).keys()
   );
   return (
-    <div>
+    <div className={styles.container}>
       <button
         onClick={() => setPage(currentPage - 1)}
         disabled={currentPage - 1 === 0}
@@ -25,7 +25,7 @@ export const Pagination = ({
       {pageNumbers.map((i) => (
         <button
           key={i}
-          className={styles.pageItem}
+          className={currentPage === i + 1 ? styles.activePageItem : ""}
           onClick={() => setPage(i + 1)}
         >
           {i + 1}
