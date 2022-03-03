@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import styles from "./Pagination.module.css";
 
 export const Pagination = ({
@@ -14,6 +15,11 @@ export const Pagination = ({
   const pageNumbers = Array.from(
     Array(Math.ceil(totalItems / itemsPerPage)).keys()
   );
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [currentPage]);
+
   return (
     <div className={styles.container}>
       <button
