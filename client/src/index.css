@@ -9,6 +9,26 @@
   margin: 0;
 }
 
+::-webkit-scrollbar {
+  background: transparent;
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #474c50;
+}
+::-webkit-scrollbar-track {
+  background: rgba(202, 204, 206, 0.04);
+}
+::-webkit-scrollbar-thumb:vertical:hover {
+  background-color: #474c50;
+}
+
+*::selection {
+  background-color: rgba(45, 170, 219, 0.3);
+}
+
 a {
   color: inherit;
   text-decoration: inherit;
