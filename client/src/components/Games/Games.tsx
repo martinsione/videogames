@@ -13,6 +13,7 @@ import {
 import { IGame, IGenre } from "../../types";
 import { GameCard } from "../GameCard";
 import { Loader } from "../Loader";
+import { Pagination } from "../Pagination";
 import { SearchBar } from "../SearchBar";
 import styles from "./Games.module.css";
 
@@ -54,7 +55,13 @@ export const Games: React.FC = () => {
     }
   };
 
-  console.log(games);
+  // Pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const gamesPerPage = 12;
+  const indexOfLastGame = currentPage * gamesPerPage;
+  const indexOfFirstGame = indexOfLastGame - gamesPerPage;
+  const currentGames = games.slice(indexOfFirstGame, indexOfLastGame);
+
   return (
     <>
       <SearchBar setLoading={setLoading} />
@@ -90,17 +97,25 @@ export const Games: React.FC = () => {
           <option value="name">Z-A</option>
         </optgroup>
       </select>
-      <div className={styles.container}>
-        {loading ? (
-          <Loader />
-        ) : (
-          games.map((game: IGame) => (
-            <Link key={game.id} to={`/games/${game.id}`}>
-              <GameCard game={game} />
-            </Link>
-          ))
-        )}
-      </div>
+      {loading ? (
+        <Loader />
+      ) : (
+        <>
+          <Pagination
+            currentPage={currentPage}
+            itemsPerPage={gamesPerPage}
+            totalItems={games.length}
+            setPage={(page: number) => setCurrentPage(page)}
+          />
+          <div className={styles.container}>
+            {currentGames.map((game: IGame) => (
+              <Link key={game.id} to={`/games/${game.id}`}>
+                <GameCard game={game} />
+              </Link>
+            ))}
+          </div>
+        </>
+      )}
     </>
   );
 };
