@@ -24,7 +24,7 @@ export const Layout = () => {
           </Link>
         ))}
       </div>
-      <main>
+      <main className={styles.main}>
         <Outlet />
       </main>
     </div>

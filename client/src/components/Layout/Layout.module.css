@@ -21,3 +21,9 @@
   font-weight: 600;
   opacity: 100%;
 }
+
+.main {
+  margin: auto;
+  max-width: 1376px;
+  min-height: 100vh;
+}
