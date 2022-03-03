@@ -12,7 +12,7 @@ export const Layout = () => {
   const { pathname } = useLocation();
 
   return (
-    <div>
+    <div className={styles.container}>
       <div className={styles.linkContainer}>
         {NAV_ITEMS.map((item) => (
           <Link

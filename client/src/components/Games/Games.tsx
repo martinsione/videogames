@@ -104,12 +104,6 @@ export const Games: React.FC = () => {
         <Loader />
       ) : (
         <>
-          <Pagination
-            currentPage={currentPage}
-            itemsPerPage={gamesPerPage}
-            totalItems={games.length}
-            setPage={(page: number) => setCurrentPage(page)}
-          />
           <div className={styles.container}>
             {currentGames.map((game: IGame) => (
               <Link key={game.id} to={`/games/${game.id}`}>
@@ -117,6 +111,12 @@ export const Games: React.FC = () => {
               </Link>
             ))}
           </div>
+          <Pagination
+            currentPage={currentPage}
+            itemsPerPage={gamesPerPage}
+            totalItems={games.length}
+            setPage={(page: number) => setCurrentPage(page)}
+          />
         </>
       )}
     </>
