@@ -76,7 +76,6 @@ export default function rootReducer(state = initialState, action: any) {
       };
 
     case ActionType.FILTER_BY_ORIGIN: {
-      console.log("vine a filtrar por origin");
       if (action.payload === "database") {
         return {
           ...state,
