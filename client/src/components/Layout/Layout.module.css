@@ -1,0 +1,23 @@
+.linkContainer {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  width: 100%;
+  margin: 1rem 0;
+}
+
+.link,
+.activeLink {
+  color: #fff;
+  opacity: 50%;
+  font-size: 1.4rem;
+}
+
+.link:hover {
+  opacity: 100%;
+}
+
+.activeLink {
+  font-weight: 600;
+  opacity: 100%;
+}
