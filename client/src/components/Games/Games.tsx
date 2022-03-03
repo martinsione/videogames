@@ -64,39 +64,42 @@ export const Games: React.FC = () => {
 
   return (
     <>
-      <SearchBar setLoading={setLoading} />
+      <div className={styles.header}>
+        <SearchBar setLoading={setLoading} />
 
-      <select className={styles.filter} onChange={handleSelect}>
-        <option className="option" value="default">
-          Filter by
-        </option>
+        <select className={styles.filter} onChange={handleSelect}>
+          <option className={styles.defaultOption} value="default">
+            Filter by
+          </option>
 
-        <optgroup label="Origin">
-          <option value="api">Api</option>
-          <option value="database">Database</option>
-        </optgroup>
-        <optgroup label="Genre">
-          {genres.map((genre: IGenre) => (
-            <option key={genre.id} value={genre.name}>
-              {genre.name}
-            </option>
-          ))}
-        </optgroup>
-      </select>
-      <select className={styles.sort} onChange={handleSelect}>
-        <option className="option" value="default">
-          Sort by
-        </option>
+          <optgroup label="Origin">
+            <option value="api">Api</option>
+            <option value="database">Database</option>
+          </optgroup>
+          <optgroup label="Genre">
+            {genres.map((genre: IGenre) => (
+              <option key={genre.id} value={genre.name}>
+                {genre.name}
+              </option>
+            ))}
+          </optgroup>
+        </select>
 
-        <optgroup label="Rating">
-          <option value="rating-asc">Rating Asc</option>
-          <option value="rating">Rating Des</option>
-        </optgroup>
-        <optgroup label="Name">
-          <option value="name-asc">A-Z</option>
-          <option value="name">Z-A</option>
-        </optgroup>
-      </select>
+        <select className={styles.sort} onChange={handleSelect}>
+          <option className={styles.defaultOption} value="default">
+            Sort by
+          </option>
+
+          <optgroup label="Rating">
+            <option value="rating-asc">Rating Asc</option>
+            <option value="rating">Rating Des</option>
+          </optgroup>
+          <optgroup label="Name">
+            <option value="name-asc">A-Z</option>
+            <option value="name">Z-A</option>
+          </optgroup>
+        </select>
+      </div>
       {loading ? (
         <Loader />
       ) : (

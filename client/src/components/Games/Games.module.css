@@ -1,3 +1,23 @@
+.header {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin: auto;
+  width: 100%;
+  max-width: 800px;
+}
+
+.header select {
+  outline: none;
+  border-radius: 2rem;
+  font-size: 1rem;
+  padding: 0 1rem;
+}
+
+.defaultOption {
+  font-weight: 900;
+}
+
 .container {
   display: grid;
   place-content: center;
