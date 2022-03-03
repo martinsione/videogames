@@ -1,7 +1,7 @@
 import axios from "axios";
 import type { Request, Response } from "express";
 import { Op } from "sequelize";
-import { videogameModel } from "../db";
+import { genreModel, videogameModel } from "../db";
 import type { IGenre, IVideogame, IVideogames } from "../types";
 
 const API = "https://api.rawg.io/api/games";
@@ -26,8 +26,7 @@ const getFromApi = async (name: any) => {
       axios.get(API, { params: { key: API_KEY, page_size: 40 } }),
       axios.get(API, { params: { key: API_KEY, page_size: 40, page: 2 } }),
     ]).then(([page1, page2]: Data[]) => {
-      // Concate page 1 and page 2
-      const data = page1.data.results.concat(page2.data.results);
+      const data = [...page1.data.results, ...page2.data.results];
       return data.map((game: IVideogame) => ({
         id: game.id,
         name: game.name,
@@ -44,11 +43,27 @@ const getFromDb = async (name: any) => {
   if (name) {
     whereStatement.name = { [Op.iLike]: `%${name}%` };
   }
-  const data = await videogameModel.findAll({
-    attributes: ["id", "name", "image"],
-    where: whereStatement,
+  const games = await videogameModel
+    .findAll({
+      attributes: ["id", "name", "image", "createdInDb"],
+      include: [
+        {
+          mapToModel: true,
+          model: genreModel,
+          as: "genres",
+          attributes: ["name"],
+          through: { attributes: [] },
+        },
+      ],
+      where: whereStatement,
+    })
+    .then((elements: any) => elements.map((el: any) => el.toJSON()));
+
+  // Map genres as an array of strings (name)
+  games.forEach((game: any) => {
+    game.genres = game.genres.map((genre: IGenre) => genre.name);
   });
-  return data;
+  return games;
 };
 
 export const getVideogames = async (req: Request, res: Response) => {
