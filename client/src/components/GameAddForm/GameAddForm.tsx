@@ -84,8 +84,7 @@ export const GameAddForm = () => {
     e.preventDefault();
     const isValidated = validate();
     if (isValidated) {
-      // dispatch(addGame(values));
-      console.log(values);
+      dispatch(addGame(values));
       setValues(initialState);
     }
   };
