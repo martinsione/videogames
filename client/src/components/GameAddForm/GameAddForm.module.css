@@ -44,7 +44,8 @@
   margin-left: 1rem;
 }
 
-.genresContainer {
+.genresContainer,
+.platformsContainer {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -52,13 +53,21 @@
   font-size: 0.8rem;
 }
 
-.genresContainer > div {
-  background-color: #28456c;
+.genre,
+.platform {
   display: flex;
   align-items: center;
-  gap: 0.2rem;
-  padding: 0.4rem 1rem;
-  border-radius: 1rem;
+  gap: 0.3rem;
+  padding: 0.4rem 0.6rem;
+  border-radius: 99rem;
+}
+
+.genre {
+  background-color: #28456c;
+}
+
+.platform {
+  background-color: #492f64;
 }
 
 .button {

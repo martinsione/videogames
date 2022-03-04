@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addGame, AppState, getGenres } from "../../state";
 import { IGenre } from "../../types";
 import styles from "./GameAddForm.module.css";
+import platforms from "./platforms.json";
 
 const initialState = {
   name: "",
@@ -40,10 +41,17 @@ export const GameAddForm = () => {
 
   const handleCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.checked) {
-      setValues({ ...values, genres: [...values.genres, e.target.value] });
+      setValues({
+        ...values,
+        [e.target.name]: [...values[e.target.name], e.target.value],
+      });
     } else {
-      const genres = values.genres.filter((g: string) => g !== e.target.value);
-      setValues({ ...values, genres });
+      setValues({
+        ...values,
+        [e.target.name]: [...values[e.target.name]].filter(
+          (item: string) => item !== e.target.value
+        ),
+      });
     }
   };
 
@@ -71,7 +79,7 @@ export const GameAddForm = () => {
       err.push({ genres: "You must select at least 1 genre" });
     }
     if (!values.platforms.length) {
-      // err.push({ ...err, platforms: "You must select at least 1 platform" });
+      err.push({ ...err, platforms: "You must select at least 1 platform" });
     }
 
     // If no errors, check the values
@@ -111,14 +119,34 @@ export const GameAddForm = () => {
         <label className={styles.error}>{errors.rating}</label>
         <div className={styles.genresContainer}>
           {genres.map((genre: IGenre) => (
-            <div key={genre.id}>
+            <div className={styles.genre} key={genre.id}>
               <span>{genre.name}</span>
-              <input onChange={handleCheck} value={genre.id} type="checkbox" />
+              <input
+                name="genres"
+                onChange={handleCheck}
+                value={genre.id}
+                // it is necesary to convert id toString() otherwise it will always return false
+                checked={values.genres.includes(genre.id.toString())}
+                type="checkbox"
+              />
             </div>
           ))}
         </div>
         <label className={styles.error}>{errors.genres}</label>
-        <h1>TODO: Add platforms</h1>
+        <div className={styles.platformsContainer}>
+          {platforms.map((platform: IGenre) => (
+            <div className={styles.platform} key={platform.id}>
+              <span>{platform.name}</span>
+              <input
+                name="platforms"
+                onChange={handleCheck}
+                value={platform.name}
+                checked={values.platforms.includes(platform.name)}
+                type="checkbox"
+              />
+            </div>
+          ))}
+        </div>
         <label className={styles.error}>{errors.platforms}</label>
         <button className={styles.button} type="submit">
           Submit
