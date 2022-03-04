@@ -26,9 +26,29 @@
   overflow-y: auto;
 }
 
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .title {
   font-size: 2.3rem;
   font-weight: 600;
+}
+
+.delete {
+  border: none;
+  border-radius: 0.3rem;
+  background-color: #6e3530;
+  color: var(--text-white);
+  font-size: 0.9rem;
+  padding: 0.8rem 1rem;
+  cursor: pointer;
+}
+
+.delete:hover {
+  opacity: 90%;
 }
 
 .subheader {

@@ -1,13 +1,14 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
-import { AppState, getGameById } from "../../state";
+import { useNavigate, useParams } from "react-router-dom";
+import { AppState, deleteGame, getGameById } from "../../state";
 import { IGameDetail } from "../../types";
 import { Loader } from "../Loader";
 import styles from "./GameDetail.module.css";
 
 export const GameDetail: React.FC = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const game: IGameDetail = useSelector((store: AppState) => store.gameDetail);
   const { id } = useParams();
 
@@ -17,6 +18,13 @@ export const GameDetail: React.FC = () => {
     }
   }, [dispatch, id]);
 
+  const handleDelete = () => {
+    if (id) {
+      dispatch(deleteGame(id));
+      return navigate("/games");
+    }
+  };
+
   return (
     <>
       {game ? (
@@ -24,7 +32,14 @@ export const GameDetail: React.FC = () => {
           <div className={styles.container}>
             <div>
               <div className={styles.body}>
-                <p className={styles.title}>{game.name}</p>
+                <div className={styles.header}>
+                  <p className={styles.title}>{game.name}</p>
+                  {game.createdInDb && (
+                    <button className={styles.delete} onClick={handleDelete}>
+                      Delete
+                    </button>
+                  )}
+                </div>
 
                 <div className={styles.subheader}>
                   <span className={styles.release}>📅 {game.release}</span>

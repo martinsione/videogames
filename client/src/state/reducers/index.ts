@@ -18,14 +18,13 @@ const initialState: IState = {
 export default function rootReducer(state = initialState, action: any) {
   switch (action.type) {
     case ActionType.ADD_GAME:
-      return { ...state, games: [...state.games, action.payload] };
+      const newGames = [...state.gamesBackup, action.payload.videogame];
+      return { ...state, backupGames: newGames, games: newGames };
     case ActionType.DELETE_GAME:
-      return {
-        ...state,
-        games: state.games.filter(
-          (game: IGame) => game.id !== action.payload.id
-        ),
-      };
+      const filteredGames = [...state.gamesBackup].filter(
+        (game: IGame) => game.id !== action.payload.id
+      );
+      return { ...state, gamesBackup: filteredGames, games: filteredGames };
     case ActionType.GET_GAMES:
       return { ...state, gamesBackup: action.payload, games: action.payload };
     case ActionType.GET_GAME_BY_ID:
