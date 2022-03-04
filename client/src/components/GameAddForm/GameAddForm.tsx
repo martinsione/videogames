@@ -31,7 +31,7 @@ export const GameAddForm = () => {
       autoComplete: "off",
       name,
       value: values[name],
-      className: styles.input,
+      className: name === "description" ? styles.textarea : styles.input,
       onChange: (
         e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
       ) => setValues({ ...values, [e.target.name]: e.target.value }),
@@ -47,39 +47,45 @@ export const GameAddForm = () => {
     }
   };
 
-  const validateNotEmpty = () => {
+  const validate = () => {
     const err = [];
-    if (!values.name.trim()) {
-      err.push({ name: "Name is required" });
+    setErrors(initialState);
+    if (values.name.trim().length < 6 || values.name.trim().length > 100) {
+      err.push({ name: "Name must be between 6 and 100 characters" });
     }
-    if (!values.description.trim()) {
-      err.push({ description: "Description is required" });
-    }
-    if (!values.image.trim()) {
-      err.push({ image: "Image is required" });
+    if (
+      values.description.trim().length < 10 ||
+      values.description.trim().length > 2000
+    ) {
+      err.push({
+        description: "Description must be between 10 and 2000 characters",
+      });
     }
     if (!values.release) {
       err.push({ release: "Release is required" });
     }
-    if (!values.rating) {
-      err.push({ rating: "Rating is required" });
+    if (values.rating < 1 || values.rating > 5) {
+      err.push({ rating: "Rating must be a valid number between 1 and 5" });
     }
     if (!values.genres.length) {
       err.push({ genres: "You must select at least 1 genre" });
     }
     if (!values.platforms.length) {
-      err.push({ ...err, platforms: "You must select at least 1 platform" });
+      // err.push({ ...err, platforms: "You must select at least 1 platform" });
     }
-    err.forEach((e) => setErrors((state: any) => ({ ...state, ...e })));
 
+    // If no errors, check the values
+
+    err.forEach((e) => setErrors((state: any) => ({ ...state, ...e })));
     return !err.length;
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const isNotEmpty = validateNotEmpty();
-    if (isNotEmpty) {
-      dispatch(addGame(values));
+    const isValidated = validate();
+    if (isValidated) {
+      // dispatch(addGame(values));
+      console.log(values);
       setValues(initialState);
     }
   };
