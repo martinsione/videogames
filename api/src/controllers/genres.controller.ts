@@ -27,7 +27,6 @@ export const getGenres = async (req: Request, res: Response) => {
 
     const genresFromApi = await getGenresFromApi();
     const mappedGenres = genresFromApi.results.map((genre: IGenre) => ({
-      id: genre.id,
       name: genre.name,
     }));
     const genres = await genreModel.bulkCreate(mappedGenres);
