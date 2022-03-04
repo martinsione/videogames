@@ -70,11 +70,28 @@ export const addVideogame = async (req: Request, res: Response) => {
     req.body;
 
   const missing: string[] = [];
+  const types = {
+    name: "string",
+    description: "string",
+    platforms: "Array<string>",
+    genres: "Array<number>",
+    released: "date - YYYY-MM-DD",
+    rating: "number",
+    image: "string",
+  };
+  const incorrectTypes: string[] = [];
 
+  // validate items
   if (!name) missing.push("name");
   if (!description) missing.push("description");
   if (!platforms) missing.push("platforms");
   if (!genres) missing.push("genres");
+
+  // validate items types
+  if (typeof name !== "string") incorrectTypes.push("name");
+  if (typeof description !== "string") incorrectTypes.push("description");
+  if (!Array.isArray(platforms)) incorrectTypes.push("platforms");
+  if (!Array.isArray(genres)) incorrectTypes.push("genres");
 
   if (missing.length) {
     return res.status(400).json({ message: `Missing: ${missing.join(", ")}` });

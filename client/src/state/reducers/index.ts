@@ -94,6 +94,12 @@ export default function rootReducer(state = initialState, action: any) {
       }
     }
 
+    case ActionType.RESET_GAME_DETAIL:
+      return { ...state, gameDetail: undefined };
+
+    case ActionType.RESET_GAME_FILTERS:
+      return { ...state, games: [...state.gamesBackup] };
+
     default:
       return state;
   }

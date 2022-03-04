@@ -52,3 +52,11 @@ export const orderByRating =
   (order?: "asc" | "desc") => async (dispatch: any) => {
     return dispatch({ type: ActionType.ORDER_BY_RATING, payload: order });
   };
+
+export const resetGameDetail = () => async (dispatch: any) => {
+  return dispatch({ type: ActionType.RESET_GAME_DETAIL });
+};
+
+export const resetGameFilters = () => async (dispatch: any) => {
+  return dispatch({ type: ActionType.RESET_GAME_FILTERS });
+};

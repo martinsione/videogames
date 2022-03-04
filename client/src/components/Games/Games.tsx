@@ -9,6 +9,8 @@ import {
   getGenres,
   orderByName,
   orderByRating,
+  resetGameDetail,
+  resetGameFilters,
 } from "../../state";
 import { IGame, IGenre } from "../../types";
 import { GameCard } from "../GameCard";
@@ -36,7 +38,7 @@ export const Games: React.FC = () => {
 
   const handleReset = () => {
     setReset(true);
-    dispatch(getGames());
+    dispatch(resetGameFilters());
   };
 
   const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -117,7 +119,12 @@ export const Games: React.FC = () => {
         <>
           <div className={styles.container}>
             {currentGames.map((game: IGame) => (
-              <Link key={game.id} to={`/games/${game.id}`}>
+              <Link
+                key={game.id}
+                to={`/games/${game.id}`}
+                // Reset the detail so the loader will show instead of flashing with another game
+                onClick={() => dispatch(resetGameDetail())}
+              >
                 <GameCard game={game} />
               </Link>
             ))}
