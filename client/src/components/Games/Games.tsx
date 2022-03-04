@@ -19,6 +19,7 @@ import styles from "./Games.module.css";
 
 export const Games: React.FC = () => {
   const [loading, setLoading] = useState(true);
+  const [reset, setReset] = useState(true);
   const dispatch = useDispatch();
   const { games, genres } = useSelector((store: AppState) => store);
 
@@ -33,8 +34,14 @@ export const Games: React.FC = () => {
     }
   }, [games]);
 
+  const handleReset = () => {
+    setReset(true);
+    dispatch(getGames());
+  };
+
   const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const value = e.target.value;
+    setReset(false);
     switch (value) {
       case "rating-asc":
         return dispatch(orderByRating("asc"));
@@ -99,6 +106,10 @@ export const Games: React.FC = () => {
             <option value="name">Z-A</option>
           </optgroup>
         </select>
+
+        <button className={styles.reset} disabled={reset} onClick={handleReset}>
+          Reset
+        </button>
       </div>
       {loading ? (
         <Loader />
