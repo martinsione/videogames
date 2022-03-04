@@ -1,13 +1,18 @@
 .container {
-  margin: 3rem auto;
+  margin: auto;
+  max-width: 1376px;
 }
 
-.linkContainer {
+.navbar {
+  top: 0;
+  position: sticky;
+  background-color: var(--bg-color);
   display: flex;
   justify-content: center;
   gap: 2rem;
   width: 100%;
-  margin: 1rem 0;
+  padding: 1rem 0;
+  margin: 2rem 0;
 }
 
 .link,
@@ -26,8 +31,6 @@
   opacity: 100%;
 }
 
-.main {
-  margin: auto;
-  max-width: 1376px;
-  min-height: 100vh;
-}
+/* .main {
+  margin-top: 3rem;
+} */

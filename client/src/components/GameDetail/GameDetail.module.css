@@ -1,32 +1,29 @@
 .center {
-  height: 100vh;
-  display: grid;
-  place-content: center;
-  place-items: center;
+  display: flex;
+  height: 80vh;
 }
 
 .container {
   display: flex;
-  max-height: 90vh;
-  max-width: 1376px;
   background-color: var(--bg-darkgray);
   box-shadow: 0 0 11px rgba(240, 240, 240, 0.4);
-  overflow: hidden;
   border-radius: 2rem;
+  overflow: hidden;
+  width: 100%;
 }
 
 /* Make each item take up half of the space */
 .container div {
   flex: 1;
-  overflow-y: auto;
 }
 
 .body {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-  margin: auto;
   padding: 2rem 4rem;
+  max-height: 100%;
+  overflow-y: auto;
 }
 
 .title {

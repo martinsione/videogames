@@ -1,5 +1,5 @@
 .center {
-  height: 100vh;
+  margin: auto;
   display: grid;
   place-content: center;
   place-items: center;
@@ -10,21 +10,29 @@
   box-shadow: 0 0 11px rgba(240, 240, 240, 0.4);
   border-radius: 2rem;
   overflow: hidden;
-  max-width: 800px;
+  max-width: 680px;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
   padding: 2rem;
 }
 
-.input {
+.input,
+.textarea {
   border: none;
   border-radius: 0.3rem;
   font-size: 0.9rem;
+  line-height: 1.5rem;
   padding: 0.8rem 1rem;
-  resize: vertical;
   outline: none;
 }
+
+.textarea {
+  min-height: 6rem;
+  height: 6rem;
+  resize: vertical;
+}
+
 .input:focus {
   outline: none;
 }

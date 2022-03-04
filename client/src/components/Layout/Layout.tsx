@@ -13,7 +13,7 @@ export const Layout = () => {
 
   return (
     <div className={styles.container}>
-      <div className={styles.linkContainer}>
+      <div className={styles.navbar}>
         {NAV_ITEMS.map((item) => (
           <Link
             className={item.path === pathname ? styles.activeLink : styles.link}
