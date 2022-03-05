@@ -57,8 +57,9 @@ export const Games: React.FC = () => {
         return dispatch(filterByOrigin("api"));
       case "database":
         return dispatch(filterByOrigin("database"));
-      case "default":
-        return dispatch(getGames());
+      case "reset":
+        setReset(true);
+        return dispatch(resetGameFilters());
       default:
         dispatch(filterByGenre(value));
     }
@@ -77,7 +78,7 @@ export const Games: React.FC = () => {
         <SearchBar setLoading={setLoading} />
 
         <select className={styles.filter} onChange={handleSelect}>
-          <option className={styles.defaultOption} value="default">
+          <option className={styles.defaultOption} value="reset">
             Filter by
           </option>
 
@@ -95,7 +96,7 @@ export const Games: React.FC = () => {
         </select>
 
         <select className={styles.sort} onChange={handleSelect}>
-          <option className={styles.defaultOption} value="default">
+          <option className={styles.defaultOption} value="reset">
             Sort by
           </option>
 
