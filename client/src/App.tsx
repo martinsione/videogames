@@ -1,4 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { About } from "./components/About";
 import { GameAddForm } from "./components/GameAddForm";
 import { GameDetail } from "./components/GameDetail";
 import { Games } from "./components/Games";
@@ -14,6 +15,7 @@ export default function App() {
           <Route path="/games" element={<Games />} />
           <Route path="/games/:id" element={<GameDetail />} />
           <Route path="/games/add" element={<GameAddForm />} />
+          <Route path="/about" element={<About />} />
         </Route>
       </Routes>
     </BrowserRouter>
