@@ -10,7 +10,7 @@ export const addGame = (game: any) => async (dispatch: any) => {
 };
 
 export const deleteGame = (id: string) => async (dispatch: any) => {
-  const { data } = await axios.delete(`/videogame/${id}`);
+  const { data } = await axios.delete(`/videogame`, { data: { id } });
   return dispatch({ type: ActionType.DELETE_GAME, payload: { id, data } });
 };
 

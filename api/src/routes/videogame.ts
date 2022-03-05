@@ -9,6 +9,6 @@ const router = Router();
 
 router.get("/:id", getVideogameById);
 router.post("/", addVideogame);
-router.delete("/:id", deleteVideogame);
+router.delete("/", deleteVideogame);
 
 export default router;
