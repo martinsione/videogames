@@ -82,9 +82,6 @@ export const GameAddForm = () => {
         description: "Description must be between 10 and 2000 characters",
       });
     }
-    if (!values.release) {
-      err.push({ release: "Release is required" });
-    }
     if (values.rating < 1 || values.rating > 5) {
       err.push({ rating: "Rating must be a valid number between 1 and 5" });
     }
@@ -92,7 +89,7 @@ export const GameAddForm = () => {
       err.push({ genres: "You must select at least 1 genre" });
     }
     if (!values.platforms.length) {
-      err.push({ ...err, platforms: "You must select at least 1 platform" });
+      err.push({ platforms: "You must select at least 1 platform" });
     }
 
     err.forEach((e) => setErrors((state: any) => ({ ...state, ...e })));
@@ -121,7 +118,6 @@ export const GameAddForm = () => {
         <input {...register("image")} placeholder="Image url" />
         <label className={styles.error}>{errors.image}</label>
         <input {...register("release")} type="date" />
-        <label className={styles.error}>{errors.release}</label>
         <input
           {...register("rating")}
           type="number"

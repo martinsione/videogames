@@ -5,7 +5,10 @@ import { ActionType } from "../action-types";
 axios.defaults.baseURL = process.env.REACT_APP_API_HOST;
 
 export const addGame = (game: any) => async (dispatch: any) => {
-  const { data } = await axios.post(`/videogame`, game);
+  const { data } = await axios.post(`/videogame`, {
+    ...game,
+    onlyRequired: true,
+  });
   return dispatch({ type: ActionType.ADD_GAME, payload: data });
 };
 

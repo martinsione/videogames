@@ -11,6 +11,6 @@ genreModel.belongsToMany(videogameModel, config);
 videogameModel.belongsToMany(genreModel, config);
 
 // Sync db
-export const dbSync = () => conn.sync({ force: true });
+export const dbSync = () => conn.sync({ alter: true });
 
 export { videogameModel, genreModel };

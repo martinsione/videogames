@@ -66,48 +66,106 @@ export const getVideogameById = async (req: Request, res: Response) => {
 };
 
 export const addVideogame = async (req: Request, res: Response) => {
-  const { name, description, platforms, genres, released, rating, image } =
-    req.body;
+  const {
+    name,
+    description,
+    platforms,
+    genres,
+    release,
+    rating,
+    image,
+    onlyRequired,
+  } = req.body;
 
-  const missing: string[] = [];
-  const types = {
-    name: "string",
-    description: "string",
-    platforms: "Array<string>",
-    genres: "Array<number>",
-    released: "date - YYYY-MM-DD",
-    rating: "number",
-    image: "string",
+  const isValidDate = (value: string | number) => {
+    const dateWrapper = new Date(value);
+    return !isNaN(dateWrapper.getDate());
   };
-  const incorrectTypes: string[] = [];
 
-  // validate items
-  if (!name) missing.push("name");
-  if (!description) missing.push("description");
-  if (!platforms) missing.push("platforms");
-  if (!genres) missing.push("genres");
-
-  // validate items types
-  if (typeof name !== "string") incorrectTypes.push("name");
-  if (typeof description !== "string") incorrectTypes.push("description");
-  if (!Array.isArray(platforms)) incorrectTypes.push("platforms");
-  if (!Array.isArray(genres)) incorrectTypes.push("genres");
-
-  if (missing.length) {
-    return res.status(400).json({ message: `Missing: ${missing.join(", ")}` });
+  interface errors {
+    field: string;
+    msg: string;
+    required: boolean;
   }
+
+  const errors = [];
+  if (
+    typeof name !== "string" ||
+    name?.trim().length < 6 ||
+    name?.trim().length > 100
+  )
+    errors.push({
+      field: "name",
+      msg: "Name should be an string between 6 and 100 characters",
+      required: true,
+    });
+  if (
+    typeof description !== "string" ||
+    description?.trim().length < 10 ||
+    description?.trim().length > 2000
+  ) {
+    errors.push({
+      field: "description",
+      msg: "Description should be an string between 10 and 2000 characters",
+      required: true,
+    });
+  }
+  if (
+    !platforms ||
+    !Array.isArray(platforms) ||
+    !platforms.every((item: any) => typeof item === "string")
+  ) {
+    errors.push({
+      field: "platforms",
+      msg: "Platforms should be an array of strings",
+      required: true,
+    });
+  }
+  if (
+    !genres ||
+    !Array.isArray(genres) ||
+    // Check if it is an array of integers
+    genres.some((i: any) => !Number.isInteger(Number(i)))
+  ) {
+    errors.push({
+      field: "genres",
+      msg: "Genres should be an array of integers",
+      required: true,
+    });
+  }
+  if (rating < 1 || rating > 5 || !Number.isInteger(Number(rating))) {
+    errors.push({
+      field: "rating",
+      msg: "Rating should be an integer between 1 and 5",
+      required: false,
+    });
+  }
+  if (!isValidDate(release)) {
+    errors.push({
+      field: "release",
+      msg: "release should be a valid date",
+      required: false,
+    });
+  }
+  if (!image) {
+    errors.push({
+      field: "image",
+      msg: "image should be a valid image url",
+      required: false,
+    });
+  }
+  const requiredFields = errors.filter((e: errors) => e.required);
+  let err: any = [];
+  errors.forEach((e) => {
+    return (err = { ...err, [e.field]: { msg: e.msg, required: e.required } });
+  });
+  if ((requiredFields.length && errors.length) || !onlyRequired)
+    return res.status(400).json(err);
 
   const game: any = { name, description, platforms };
-  if (released) game.released = released;
+  if (release) game.released = release;
+  if (rating) game.rating = rating;
   if (image) game.image = image;
-  if (rating) {
-    if (rating < 0 || rating > 5) {
-      return res
-        .status(400)
-        .json({ message: "Rating must be a number between 0 and 5" });
-    }
-    game.rating = rating;
-  }
 
   const [videogame, created] = await videogameModel.findOrCreate({
     where: { ...game },
