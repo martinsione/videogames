@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addGame, AppState, getGenres } from "../../state";
 import { IGenre } from "../../types";
@@ -26,17 +26,19 @@ export const GameAddForm = () => {
   const [values, setValues] = useState<any>(initialState);
   const [errors, setErrors] = useState<any>(initialState);
 
-  // TODO: Search why keyof IGameDetail doesnt work
-  const register = (name: any) => {
-    return {
-      autoComplete: "off",
-      name,
-      value: values[name],
-      className: name === "description" ? styles.textarea : styles.input,
-      onChange: (
-        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-      ) => setValues({ ...values, [e.target.name]: e.target.value }),
-    };
+  const onChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    let { name, value } = e.target;
+    if (name === "rating") {
+      if (value !== "" && value < "1") {
+        value = "1";
+      } else if (value > "5") {
+        value = "5";
+      }
+      value = value.slice(0, 1);
+    }
+    setValues({ ...values, [name]: value });
   };
 
   const handleCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -53,6 +55,17 @@ export const GameAddForm = () => {
         ),
       });
     }
+  };
+
+  // TODO: Search why keyof IGameDetail doesnt work
+  const register = (name: any) => {
+    return {
+      autoComplete: "off",
+      name,
+      value: values[name],
+      className: name === "description" ? styles.textarea : styles.input,
+      onChange,
+    };
   };
 
   const validate = () => {
@@ -81,8 +94,6 @@ export const GameAddForm = () => {
     if (!values.platforms.length) {
       err.push({ ...err, platforms: "You must select at least 1 platform" });
     }
-
-    // If no errors, check the values
 
     err.forEach((e) => setErrors((state: any) => ({ ...state, ...e })));
     return !err.length;
