@@ -1,6 +1,7 @@
 import axios from "axios";
 import type { Request, Response } from "express";
 import { genreModel, videogameModel } from "../db";
+import { validateGame } from "../helpers/validateGame";
 import type { IGenre, IPlatform, IVideogame } from "../types";
 
 const API = "https://api.rawg.io/api/games";
@@ -77,84 +78,8 @@ export const addVideogame = async (req: Request, res: Response) => {
     onlyRequired,
   } = req.body;
 
-  const isValidDate = (value: string | number) => {
-    const dateWrapper = new Date(value);
-    return !isNaN(dateWrapper.getDate());
-  };
-
-  interface errors {
-    field: string;
-    msg: string;
-    required: boolean;
-  }
-
-  const errors = [];
-  if (
-    typeof name !== "string" ||
-    name?.trim().length < 6 ||
-    name?.trim().length > 100
-  )
-    errors.push({
-      field: "name",
-      msg: "Name should be an string between 6 and 100 characters",
-      required: true,
-    });
-  if (
-    typeof description !== "string" ||
-    description?.trim().length < 10 ||
-    description?.trim().length > 2000
-  ) {
-    errors.push({
-      field: "description",
-      msg: "Description should be an string between 10 and 2000 characters",
-      required: true,
-    });
-  }
-  if (
-    !platforms ||
-    !Array.isArray(platforms) ||
-    !platforms.every((item: any) => typeof item === "string")
-  ) {
-    errors.push({
-      field: "platforms",
-      msg: "Platforms should be an array of strings",
-      required: true,
-    });
-  }
-  if (
-    !genres ||
-    !Array.isArray(genres) ||
-    // Check if it is an array of integers
-    genres.some((i: any) => !Number.isInteger(Number(i)))
-  ) {
-    errors.push({
-      field: "genres",
-      msg: "Genres should be an array of integers",
-      required: true,
-    });
-  }
-  if (rating < 1 || rating > 5 || !Number.isInteger(Number(rating))) {
-    errors.push({
-      field: "rating",
-      msg: "Rating should be an integer between 1 and 5",
-      required: false,
-    });
-  }
-  if (!isValidDate(release)) {
-    errors.push({
-      field: "release",
-      msg: "release should be a valid date",
-      required: false,
-    });
-  }
-  if (!image) {
-    errors.push({
-      field: "image",
-      msg: "image should be a valid image url",
-      required: false,
-    });
-  }
-  const requiredFields = errors.filter((e: errors) => e.required);
+  const errors = validateGame({ ...req.body });
+  const requiredFields = errors.filter((e) => e.required);
   let err: any = [];
   errors.forEach((e) => {
     return (err = { ...err, [e.field]: { msg: e.msg, required: e.required } });
@@ -188,5 +113,26 @@ export const deleteVideogame = async (req: Request, res: Response) => {
     res.json({ message: `Item ${id} successfully deleted`, success: true });
   } catch (e) {
     return res.status(500).json(e);
+  }
+};
+
+export const updateVideogame = async (req: Request, res: Response) => {
+  const { id, genres, ...attributes } = req.body;
+  const errors = validateGame({ ...attributes, genres });
+  const requiredFields = errors.filter((e) => e.required);
+  let err: any = [];
+  errors.forEach((e) => {
+    return (err = { ...err, [e.field]: { msg: e.msg, required: e.required } });
+  });
+  if (requiredFields.length) return res.status(400).json(err);
+  try {
+    const videogame = await videogameModel.findByPk(id);
+    await videogame.setGenres(genres);
+    await videogame.update(attributes);
+    await videogame.save();
+    const videogameWithGenres = await getVideogameByIdFromDb(id);
+    res.json(videogameWithGenres);
+  } catch (e) {
+    res.status(500).json(e);
   }
 };
