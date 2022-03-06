@@ -116,6 +116,9 @@ export const GameAddForm = () => {
         />
         <label className={styles.error}>{errors.description}</label>
         <input {...register("image")} placeholder="Image url" />
+        {values.image && (
+          <img className={styles.image} src={values.image} alt="" />
+        )}
         <label className={styles.error}>{errors.image}</label>
         <input {...register("release")} type="date" />
         <input

@@ -44,6 +44,10 @@
   margin-left: 1rem;
 }
 
+.image {
+  border-radius: 0.3rem;
+}
+
 .genresContainer,
 .platformsContainer {
   display: flex;
