@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addGame, AppState, getGenres } from "../../state";
 import { IGenre } from "../../types";
-import styles from "./GameAddForm.module.css";
+import styles from "./Form.module.css";
 import platforms from "./platforms.json";
 
 const initialState = {
@@ -15,7 +15,7 @@ const initialState = {
   platforms: [],
 };
 
-export const GameAddForm = () => {
+export const Form = () => {
   const dispatch = useDispatch();
   const genres = useSelector((store: AppState) => store.genres);
 
