@@ -4,6 +4,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { AppState, deleteGame, getGameById } from "../../state";
 import { IGameDetail } from "../../types";
 import { Loader } from "../Loader";
+import { NotFound } from "../NotFound";
 import styles from "./GameDetail.module.css";
 
 export const GameDetail: React.FC = () => {
@@ -24,6 +25,10 @@ export const GameDetail: React.FC = () => {
       return navigate("/games");
     }
   };
+
+  if (game === null) {
+    return <NotFound status={404} message={`Game "${id}" was not found`} />;
+  }
 
   return (
     <>

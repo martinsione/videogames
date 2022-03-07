@@ -5,6 +5,7 @@ import { GameDetail } from "./components/GameDetail";
 import { Games } from "./components/Games";
 import { Landing } from "./components/Landing";
 import { Layout } from "./components/Layout";
+import { NotFound } from "./components/NotFound";
 
 export default function App() {
   return (
@@ -17,6 +18,7 @@ export default function App() {
           <Route path="/games/add" element={<Form />} />
           <Route path="/games/edit/:id" element={<Form />} />
           <Route path="/about" element={<About />} />
+          <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
     </BrowserRouter>

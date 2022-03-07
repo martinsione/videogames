@@ -2,7 +2,7 @@ import { IGame, IGameDetail, IGenre } from "../../types";
 import { ActionType } from "../action-types";
 
 interface IState {
-  gameDetail: IGameDetail | undefined;
+  gameDetail: IGameDetail | undefined | null;
   games: IGame[];
   gamesBackup: IGame[];
   genres: IGenre[];

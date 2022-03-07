@@ -9,6 +9,7 @@ import {
   getGenres,
 } from "../../state";
 import { IGenre } from "../../types";
+import { NotFound } from "../NotFound";
 import styles from "./Form.module.css";
 import platforms from "./platforms.json";
 
@@ -137,6 +138,10 @@ export const Form = () => {
       }
     }
   };
+
+  if (game === null) {
+    return <NotFound status={404} message={`Game "${id}" was not found`} />;
+  }
 
   return (
     <div className={styles.center}>

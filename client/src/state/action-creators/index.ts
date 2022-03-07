@@ -28,8 +28,12 @@ export const getGames = () => async (dispatch: any) => {
 };
 
 export const getGameById = (id: number | string) => async (dispatch: any) => {
-  const { data } = await axios.get(`/videogame/${id}`);
-  return dispatch({ type: ActionType.GET_GAME_BY_ID, payload: data });
+  try {
+    const { data } = await axios.get(`/videogame/${id}`);
+    return dispatch({ type: ActionType.GET_GAME_BY_ID, payload: data });
+  } catch (e) {
+    return dispatch({ type: ActionType.GET_GAME_BY_ID, payload: null });
+  }
 };
 
 export const getGameByName = (name: string) => async (dispatch: any) => {
