@@ -8,7 +8,7 @@ export interface IGame {
 
 export interface IGameDetail extends IGame {
   description: string;
-  release?: string;
+  released?: string;
   platforms: string[];
   createdInDb?: boolean;
 }

@@ -24,7 +24,7 @@ export interface IVideogame {
   id: number;
   name: string;
   description?: string;
-  release?: string;
+  released?: string;
   rating?: number;
   image: string;
   platforms: IPlatform[];

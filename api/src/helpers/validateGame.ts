@@ -18,7 +18,7 @@ export const validateGame = ({
   genres,
   image,
   rating,
-  release,
+  released,
 }: Partial<IVideogame>) => {
   const errors: errors[] = [];
   if (
@@ -77,10 +77,10 @@ export const validateGame = ({
       required: false,
     });
   }
-  if (!release || !isValidDate(release)) {
+  if (!released || !isValidDate(released)) {
     errors.push({
-      field: "release",
-      msg: "release should be a valid date",
+      field: "released",
+      msg: "released should be a valid date",
       required: false,
     });
   }

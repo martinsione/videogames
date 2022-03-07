@@ -17,7 +17,7 @@ const getVideogameByIdFromApi = async (id: string) => {
     name: data.name,
     description: data.description,
     genres: data.genres.map((genre: IGenre) => genre.name),
-    release: data.released,
+    releases: data.released,
     rating: data.rating,
     platforms: data.platforms.map(
       (platform: IPlatform) => platform.platform.name
@@ -72,7 +72,7 @@ export const addVideogame = async (req: Request, res: Response) => {
     description,
     platforms,
     genres,
-    release,
+    released,
     rating,
     image,
     onlyRequired,
@@ -88,7 +88,7 @@ export const addVideogame = async (req: Request, res: Response) => {
     return res.status(400).json(err);
 
   const game: any = { name, description, platforms };
-  if (release) game.released = release;
+  if (released) game.released = released;
   if (rating) game.rating = rating;
   if (image) game.image = image;
 
