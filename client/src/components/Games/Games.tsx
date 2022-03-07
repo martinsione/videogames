@@ -5,8 +5,8 @@ import {
   AppState,
   filterByGenre,
   filterByOrigin,
-  getGameByName,
   getGames,
+  getGamesByName,
   orderByName,
   orderByRating,
   resetGameDetail,
@@ -29,7 +29,7 @@ export const Games: React.FC = () => {
   useEffect(() => {
     const search = searchParams.get("search");
     setLoading(true);
-    search ? dispatch(getGameByName(search)) : dispatch(getGames());
+    search ? dispatch(getGamesByName(search)) : dispatch(getGames());
   }, [searchParams, dispatch]);
 
   useEffect(() => {

@@ -20,11 +20,13 @@ export default function rootReducer(state = initialState, action: any) {
     case ActionType.ADD_GAME:
       const newGames = [...state.gamesBackup, action.payload.videogame];
       return { ...state, backupGames: newGames, games: newGames };
+
     case ActionType.DELETE_GAME:
-      const filteredGames = [...state.gamesBackup].filter(
-        (game: IGame) => game.id !== action.payload.id
-      );
+      const filteredGames = [...state.gamesBackup].filter((game: IGame) => {
+        return game.id !== action.payload.id;
+      });
       return { ...state, gamesBackup: filteredGames, games: filteredGames };
+
     case ActionType.EDIT_GAME:
       const editedGames = [...state.gamesBackup].map((game: IGame) =>
         game.id === action.payload.id
@@ -32,53 +34,13 @@ export default function rootReducer(state = initialState, action: any) {
           : game
       );
       return { ...state, gamesBackup: editedGames, games: editedGames };
-    case ActionType.GET_GAMES:
-      return { ...state, gamesBackup: action.payload, games: action.payload };
-    case ActionType.GET_GAME_BY_ID:
-      return { ...state, gameDetail: action.payload };
-    case ActionType.GET_GAME_BY_NAME:
-      return { ...state, gamesBackup: action.payload, games: action.payload };
-    case ActionType.GET_GENRES:
-      return { ...state, genres: action.payload };
-    case ActionType.ORDER_BY_NAME:
-      if (action.payload === "asc") {
-        return {
-          ...state,
-          games: [...state.games].sort((a: IGame, b: IGame) =>
-            a.name.localeCompare(b.name)
-          ),
-        };
-      } else {
-        return {
-          ...state,
-          games: [...state.games].sort((a: IGame, b: IGame) =>
-            b.name.localeCompare(a.name)
-          ),
-        };
-      }
-    case ActionType.ORDER_BY_RATING:
-      if (action.payload === "asc") {
-        return {
-          ...state,
-          games: [...state.games].sort(
-            (a: IGame, b: IGame) => b.rating - a.rating
-          ),
-        };
-      } else {
-        return {
-          ...state,
-          games: [...state.games].sort(
-            (a: IGame, b: IGame) => a.rating - b.rating
-          ),
-        };
-      }
 
     case ActionType.FILTER_BY_GENRE:
       return {
         ...state,
-        games: [...state.gamesBackup].filter((game: IGame) =>
-          game.genres.includes(action.payload)
-        ),
+        games: [...state.gamesBackup].filter((game: IGame) => {
+          return game.genres.includes(action.payload);
+        }),
       };
 
     case ActionType.FILTER_BY_ORIGIN: {
@@ -100,6 +62,52 @@ export default function rootReducer(state = initialState, action: any) {
         return { ...state };
       }
     }
+
+    case ActionType.GET_GAME_BY_ID:
+      return { ...state, gameDetail: action.payload };
+
+    case ActionType.GET_GAMES:
+      return { ...state, gamesBackup: action.payload, games: action.payload };
+
+    case ActionType.GET_GAMES_BY_NAME:
+      return { ...state, gamesBackup: action.payload, games: action.payload };
+
+    case ActionType.GET_GENRES:
+      return { ...state, genres: action.payload };
+
+    case ActionType.ORDER_BY_NAME:
+      if (action.payload === "asc") {
+        return {
+          ...state,
+          games: [...state.games].sort((a: IGame, b: IGame) =>
+            a.name.localeCompare(b.name)
+          ),
+        };
+      } else {
+        return {
+          ...state,
+          games: [...state.games].sort((a: IGame, b: IGame) =>
+            b.name.localeCompare(a.name)
+          ),
+        };
+      }
+
+    case ActionType.ORDER_BY_RATING:
+      if (action.payload === "asc") {
+        return {
+          ...state,
+          games: [...state.games].sort(
+            (a: IGame, b: IGame) => b.rating - a.rating
+          ),
+        };
+      } else {
+        return {
+          ...state,
+          games: [...state.games].sort(
+            (a: IGame, b: IGame) => a.rating - b.rating
+          ),
+        };
+      }
 
     case ActionType.RESET_GAME_DETAIL:
       return { ...state, gameDetail: undefined };
