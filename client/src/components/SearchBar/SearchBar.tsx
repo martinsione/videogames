@@ -1,13 +1,12 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { getGameByName } from "../../state";
 import styles from "./SearchBar.module.css";
 
-export const SearchBar = ({
-  setLoading,
-}: {
-  setLoading: (arg: boolean) => void;
-}) => {
+export const SearchBar = () => {
+  const navigate = useNavigate();
+
   const dispatch = useDispatch();
   const [value, setValue] = useState("");
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -18,8 +17,7 @@ export const SearchBar = ({
     e.preventDefault();
     // if value is not an empty string
     if (value.trim()) {
-      setLoading(true);
-      dispatch(getGameByName(value));
+      navigate(`?search=${value}`);
       setValue("");
     }
   };

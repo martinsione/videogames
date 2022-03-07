@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useSearchParams } from "react-router-dom";
 import {
   AppState,
   filterByGenre,
   filterByOrigin,
+  getGameByName,
   getGames,
   getGenres,
   orderByName,
@@ -22,18 +23,18 @@ import styles from "./Games.module.css";
 export const Games: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [reset, setReset] = useState(true);
+  const [params, setParams] = useSearchParams();
   const dispatch = useDispatch();
   const { games, genres } = useSelector((store: AppState) => store);
 
   useEffect(() => {
-    dispatch(getGames());
-    dispatch(getGenres());
-  }, [dispatch]);
+    const search = params.get("search");
+    setLoading(true);
+    search ? dispatch(getGameByName(search)) : dispatch(getGames());
+  }, [params]);
 
   useEffect(() => {
-    if (games.length) {
-      setLoading(false);
-    }
+    if (games.length) setLoading(false);
   }, [games]);
 
   const handleReset = () => {
@@ -75,7 +76,7 @@ export const Games: React.FC = () => {
   return (
     <>
       <div className={styles.header}>
-        <SearchBar setLoading={setLoading} />
+        <SearchBar />
 
         <select className={styles.filter} onChange={handleSelect}>
           <option className={styles.defaultOption} value="reset">
