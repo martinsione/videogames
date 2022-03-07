@@ -22,15 +22,15 @@ import styles from "./Games.module.css";
 export const Games: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [reset, setReset] = useState(true);
-  const [params, setParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const dispatch = useDispatch();
   const { games, genres } = useSelector((store: AppState) => store);
 
   useEffect(() => {
-    const search = params.get("search");
+    const search = searchParams.get("search");
     setLoading(true);
     search ? dispatch(getGameByName(search)) : dispatch(getGames());
-  }, [params, dispatch]);
+  }, [searchParams, dispatch]);
 
   useEffect(() => {
     if (games.length) setLoading(false);
@@ -75,7 +75,7 @@ export const Games: React.FC = () => {
   return (
     <>
       <div className={styles.header}>
-        <SearchBar />
+        <SearchBar setSearchParams={setSearchParams} />
 
         <select className={styles.filter} onChange={handleSelect}>
           <option className={styles.defaultOption} value="reset">
