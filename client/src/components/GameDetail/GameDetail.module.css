@@ -29,6 +29,7 @@
 .header {
   display: flex;
   justify-content: space-between;
+  gap: 1.5rem;
   align-items: center;
 }
 
@@ -37,25 +38,11 @@
   font-weight: 600;
 }
 
-.delete {
-  border: none;
-  border-radius: 0.3rem;
-  background-color: #6e3530;
-  color: var(--text-white);
-  font-size: 0.9rem;
-  padding: 0.8rem 1rem;
-  cursor: pointer;
-}
-
-.delete:hover {
-  opacity: 90%;
-}
-
 .subheader {
   display: flex;
   gap: 1rem;
 }
-.release,
+.released,
 .rating {
   padding: 0.4rem 0.6rem;
   border-radius: 9999px;
@@ -63,7 +50,7 @@
   width: fit-content;
 }
 
-.release {
+.released {
   background-color: #85581d;
 }
 
@@ -117,4 +104,39 @@
   -moz-user-select: none;
   -webkit-user-select: none;
   user-select: none;
+}
+
+.editableContainer {
+  display: flex;
+  gap: 0.5rem;
+
+  /* Positioning */
+  position: absolute;
+  z-index: 9999;
+  top: 1rem;
+  right: 1rem;
+}
+
+.edit,
+.delete {
+  padding: 0.6rem 0.7rem;
+  border-radius: 0.3rem;
+  color: #fff;
+  font-size: 1rem;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.edit {
+  background-color: #2b593e;
+}
+
+.delete {
+  background-color: #6e3530;
+}
+
+.edit:hover,
+.delete:hover {
+  opacity: 0.9;
 }

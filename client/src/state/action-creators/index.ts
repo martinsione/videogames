@@ -17,6 +17,11 @@ export const deleteGame = (id: string) => async (dispatch: any) => {
   return dispatch({ type: ActionType.DELETE_GAME, payload: { id, data } });
 };
 
+export const editGame = (values: any) => async (dispatch: any) => {
+  const { data } = await axios.put(`/videogame`, { ...values });
+  return dispatch({ type: ActionType.EDIT_GAME, payload: data });
+};
+
 export const getGames = () => async (dispatch: any) => {
   const { data } = await axios.get(`/videogames`);
   return dispatch({ type: ActionType.GET_GAMES, payload: data });

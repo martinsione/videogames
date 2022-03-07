@@ -25,6 +25,13 @@ export default function rootReducer(state = initialState, action: any) {
         (game: IGame) => game.id !== action.payload.id
       );
       return { ...state, gamesBackup: filteredGames, games: filteredGames };
+    case ActionType.EDIT_GAME:
+      const editedGames = [...state.gamesBackup].map((game: IGame) =>
+        game.id === action.payload.id
+          ? { ...game, ...action.payload.videogame }
+          : game
+      );
+      return { ...state, gamesBackup: editedGames, games: editedGames };
     case ActionType.GET_GAMES:
       return { ...state, gamesBackup: action.payload, games: action.payload };
     case ActionType.GET_GAME_BY_ID:

@@ -1,6 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addGame, AppState, getGenres } from "../../state";
+import { useLocation, useParams } from "react-router-dom";
+import {
+  addGame,
+  AppState,
+  editGame,
+  getGameById,
+  getGenres,
+} from "../../state";
 import { IGenre } from "../../types";
 import styles from "./Form.module.css";
 import platforms from "./platforms.json";
@@ -9,7 +16,7 @@ const initialState = {
   name: "",
   description: "",
   image: "",
-  release: "",
+  released: "",
   genres: [],
   rating: "",
   platforms: [],
@@ -18,10 +25,32 @@ const initialState = {
 export const Form = () => {
   const dispatch = useDispatch();
   const genres = useSelector((store: AppState) => store.genres);
+  const game = useSelector((store: AppState) => store.gameDetail);
+
+  const { id } = useParams();
+  const { pathname } = useLocation();
+  useEffect(() => {
+    if (id) {
+      dispatch(getGameById(id));
+    }
+    dispatch(getGenres());
+  }, [dispatch, id, pathname]);
 
   useEffect(() => {
-    dispatch(getGenres());
-  }, [dispatch]);
+    if (pathname.includes("edit") && game?.id) {
+      const { id: gameId, ...restOfGame } = game;
+
+      restOfGame.genres = genres.filter((genre: IGenre) => {
+        return restOfGame.genres.includes(genre.name) && genre;
+      });
+      restOfGame.genres = restOfGame.genres.map((genre: IGenre) => {
+        return genre.id.toString();
+      });
+      setValues(restOfGame);
+    } else {
+      setValues(initialState);
+    }
+  }, [game, id, pathname, genres]);
 
   const [values, setValues] = useState<any>(initialState);
   const [errors, setErrors] = useState<any>(initialState);
@@ -62,7 +91,7 @@ export const Form = () => {
     return {
       autoComplete: "off",
       name,
-      value: values[name],
+      value: values[name] === null ? undefined : values[name],
       className: name === "description" ? styles.textarea : styles.input,
       onChange,
     };
@@ -100,8 +129,12 @@ export const Form = () => {
     e.preventDefault();
     const isValidated = validate();
     if (isValidated) {
-      dispatch(addGame(values));
-      setValues(initialState);
+      if (id) {
+        dispatch(editGame({ id, ...values }));
+      } else {
+        dispatch(addGame(values));
+        setValues(initialState);
+      }
     }
   };
 
@@ -120,7 +153,7 @@ export const Form = () => {
           <img className={styles.image} src={values.image} alt="" />
         )}
         <label className={styles.error}>{errors.image}</label>
-        <input {...register("release")} type="date" />
+        <input {...register("released")} type="date" />
         <input
           {...register("rating")}
           type="number"
@@ -159,7 +192,7 @@ export const Form = () => {
         </div>
         <label className={styles.error}>{errors.platforms}</label>
         <button className={styles.button} type="submit">
-          Submit
+          {id ? "Save" : "Add"}
         </button>
       </form>
     </div>

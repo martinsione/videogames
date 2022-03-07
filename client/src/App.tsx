@@ -15,6 +15,7 @@ export default function App() {
           <Route path="/games" element={<Games />} />
           <Route path="/games/:id" element={<GameDetail />} />
           <Route path="/games/add" element={<Form />} />
+          <Route path="/games/edit/:id" element={<Form />} />
           <Route path="/about" element={<About />} />
         </Route>
       </Routes>

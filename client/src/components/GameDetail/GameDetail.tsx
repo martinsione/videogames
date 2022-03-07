@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { AppState, deleteGame, getGameById } from "../../state";
 import { IGameDetail } from "../../types";
 import { Loader } from "../Loader";
@@ -34,15 +34,10 @@ export const GameDetail: React.FC = () => {
               <div className={styles.body}>
                 <div className={styles.header}>
                   <p className={styles.title}>{game.name}</p>
-                  {game.createdInDb && (
-                    <button className={styles.delete} onClick={handleDelete}>
-                      Delete
-                    </button>
-                  )}
                 </div>
 
                 <div className={styles.subheader}>
-                  <span className={styles.release}>📅 {game.release}</span>
+                  <span className={styles.released}>📅 {game.released}</span>
                   <span className={styles.rating}>⭐ {game.rating}</span>
                 </div>
 
@@ -63,6 +58,16 @@ export const GameDetail: React.FC = () => {
               </div>
             </div>
             <div className={styles.imageContainer}>
+              {game.createdInDb && (
+                <div className={styles.editableContainer}>
+                  <Link to={`/games/edit/${id}`}>
+                    <button className={styles.edit}>Edit</button>
+                  </Link>
+                  <button className={styles.delete} onClick={handleDelete}>
+                    Delete
+                  </button>
+                </div>
+              )}
               <img className={styles.image} src={game.image} alt={game.name} />
             </div>
           </div>
