@@ -1,13 +1,12 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useLocation, useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import {
   AppState,
   filterByGenre,
   filterByOrigin,
   getGameByName,
   getGames,
-  getGenres,
   orderByName,
   orderByRating,
   resetGameDetail,
@@ -31,7 +30,7 @@ export const Games: React.FC = () => {
     const search = params.get("search");
     setLoading(true);
     search ? dispatch(getGameByName(search)) : dispatch(getGames());
-  }, [params]);
+  }, [params, dispatch]);
 
   useEffect(() => {
     if (games.length) setLoading(false);
