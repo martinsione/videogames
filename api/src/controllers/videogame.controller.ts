@@ -17,7 +17,7 @@ const getVideogameByIdFromApi = async (id: string) => {
     name: data.name,
     description: data.description,
     genres: data.genres.map((genre: IGenre) => genre.name),
-    releases: data.released,
+    released: data.released,
     rating: data.rating,
     platforms: data.platforms.map(
       (platform: IPlatform) => platform.platform.name
