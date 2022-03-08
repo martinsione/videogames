@@ -29,9 +29,7 @@ export default function rootReducer(state = initialState, action: any) {
 
     case ActionType.EDIT_GAME:
       const editedGames = [...state.gamesBackup].map((game: IGame) =>
-        game.id === action.payload.id
-          ? { ...game, ...action.payload.videogame }
-          : game
+        game.id === action.payload.id ? action.payload : game
       );
       return { ...state, gamesBackup: editedGames, games: editedGames };
 
