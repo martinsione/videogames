@@ -29,8 +29,14 @@ export const Games: React.FC = () => {
   useEffect(() => {
     const search = searchParams.get("search");
     setLoading(true);
-    search ? dispatch(getGamesByName(search)) : dispatch(getGames());
-  }, [searchParams, dispatch]);
+    if (search) {
+      dispatch(getGamesByName(search));
+    } else {
+      if (games.length < 80) {
+        dispatch(getGames());
+      }
+    }
+  }, [games.length, searchParams, dispatch]);
 
   useEffect(() => {
     if (games.length) setLoading(false);
