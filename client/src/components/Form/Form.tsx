@@ -139,7 +139,7 @@ export const Form = () => {
     }
   };
 
-  if (game === null) {
+  if (pathname.includes("edit") && game === null) {
     return <NotFound status={404} message={`Game "${id}" was not found`} />;
   }
 
