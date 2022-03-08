@@ -137,6 +137,7 @@ export const Form = () => {
         setValues(initialState);
       }
     }
+    window.scrollTo(0, 0);
   };
 
   if (pathname.includes("edit") && game === null) {
