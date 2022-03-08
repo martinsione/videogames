@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { AppState, deleteGame, getGameById } from "../../state";
 import { IGameDetail } from "../../types";
 import { Loader } from "../Loader";
@@ -9,7 +9,6 @@ import styles from "./GameDetail.module.css";
 
 export const GameDetail: React.FC = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const game: IGameDetail = useSelector((store: AppState) => store.gameDetail);
   const { id } = useParams();
 
@@ -18,13 +17,6 @@ export const GameDetail: React.FC = () => {
       dispatch(getGameById(id));
     }
   }, [dispatch, id]);
-
-  const handleDelete = () => {
-    if (id) {
-      dispatch(deleteGame(id));
-      return navigate("/games");
-    }
-  };
 
   if (game === null) {
     return <NotFound status={404} message={`Game "${id}" was not found`} />;
@@ -68,9 +60,13 @@ export const GameDetail: React.FC = () => {
                   <Link to={`/games/edit/${id}`}>
                     <button className={styles.edit}>Edit</button>
                   </Link>
-                  <button className={styles.delete} onClick={handleDelete}>
+                  <Link
+                    className={styles.delete}
+                    onClick={() => id && dispatch(deleteGame(id))}
+                    to="/games"
+                  >
                     Delete
-                  </button>
+                  </Link>
                 </div>
               )}
               <img className={styles.image} src={game.image} alt={game.name} />
