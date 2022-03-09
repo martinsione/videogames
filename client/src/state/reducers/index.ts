@@ -18,8 +18,10 @@ const initialState: IState = {
 export default function rootReducer(state = initialState, action: any) {
   switch (action.type) {
     case ActionType.ADD_GAME:
-      const newGames = [action.payload.videogame, ...state.gamesBackup];
-      return { ...state, backupGames: newGames, games: newGames };
+      const { description, released, platforms, ...newGame } =
+        action.payload.videogame;
+      const newGames = [newGame, ...state.gamesBackup];
+      return { ...state, gamesBackup: newGames, games: newGames };
 
     case ActionType.DELETE_GAME:
       const filteredGames = [...state.gamesBackup].filter((game: IGame) => {
@@ -43,18 +45,19 @@ export default function rootReducer(state = initialState, action: any) {
 
     case ActionType.FILTER_BY_ORIGIN: {
       if (action.payload === "database") {
+        console.log(state.gamesBackup);
         return {
           ...state,
-          games: [...state.gamesBackup].filter((game: IGame) =>
-            game.hasOwnProperty("createdInDb")
-          ),
+          games: [...state.gamesBackup].filter((game: IGame) => {
+            return game.hasOwnProperty("createdInDb");
+          }),
         };
       } else if (action.payload === "api") {
         return {
           ...state,
-          games: [...state.gamesBackup].filter(
-            (game: IGame) => !game.hasOwnProperty("createdInDb")
-          ),
+          games: [...state.gamesBackup].filter((game: IGame) => {
+            return !game.hasOwnProperty("createdInDb");
+          }),
         };
       } else {
         return { ...state };

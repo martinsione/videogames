@@ -4,13 +4,13 @@ export interface IGame {
   image: string;
   genres: string[];
   rating: number;
+  createdInDb?: boolean;
 }
 
 export interface IGameDetail extends IGame {
   description: string;
   released?: string;
   platforms: string[];
-  createdInDb?: boolean;
 }
 
 export interface IGenre {
