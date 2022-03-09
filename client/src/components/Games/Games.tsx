@@ -25,7 +25,8 @@ export const Games: React.FC = () => {
   const [search, setSearch] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
   const dispatch = useDispatch();
-  const { games, genres } = useSelector((store: AppState) => store);
+  const games = useSelector((state: AppState) => state.games);
+  const genres = useSelector((state: AppState) => state.genres);
 
   useEffect(() => {
     setLoading(true);

@@ -18,7 +18,7 @@ const initialState: IState = {
 export default function rootReducer(state = initialState, action: any) {
   switch (action.type) {
     case ActionType.ADD_GAME:
-      const newGames = [...state.gamesBackup, action.payload.videogame];
+      const newGames = [action.payload.videogame, ...state.gamesBackup];
       return { ...state, backupGames: newGames, games: newGames };
 
     case ActionType.DELETE_GAME:
