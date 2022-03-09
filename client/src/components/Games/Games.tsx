@@ -22,21 +22,22 @@ import styles from "./Games.module.css";
 export const Games: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [reset, setReset] = useState(true);
+  const [search, setSearch] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
   const dispatch = useDispatch();
   const { games, genres } = useSelector((store: AppState) => store);
 
   useEffect(() => {
-    const search = searchParams.get("search");
     setLoading(true);
-    if (search) {
-      dispatch(getGamesByName(search));
-    } else {
-      if (games.length < 80) {
-        dispatch(getGames());
-      }
+    const searchValue = searchParams.get("search");
+    if (searchValue) {
+      setSearch(true);
+      dispatch(getGamesByName(searchValue));
+    } else if (!games.length || search) {
+      setSearch(false);
+      dispatch(getGames());
     }
-  }, [games.length, searchParams, dispatch]);
+  }, [games.length, search, searchParams, dispatch]);
 
   useEffect(() => {
     if (games.length) setLoading(false);
